@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Canvas Task</title>
+  <style>
+    canvas {
+      border: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="c" width="500" height="400"></canvas>
+
+<script>
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+
+  /* ========= Question 3 ========= */
+ 
+
+  // Gradient text
+  const grad = ctx.createLinearGradient(180, 150, 320, 150);
+  grad.addColorStop(0, "red");
+  grad.addColorStop(1, "orange");
+
+  
+
+  /* ========= Question 4 ========= */
+  let drawing = false;
+  let erase = false;
+
+  canvas.onmousedown = e => {
+    drawing = true;
+    erase = e.button === 2; // right click
+  };
+
+  canvas.onmouseup = () => drawing = false;
+
+  canvas.onmousemove = e => {
+    if (!drawing) return;
+
+    ctx.beginPath();
+    ctx.arc(e.offsetX, e.offsetY, 5, 0, Math.PI * 2);
+
+    ctx.fillStyle = erase ? "#fff" : "#000";
+    ctx.fill();
+  };
+
+  // Disable right-click menu
+  canvas.oncontextmenu = e => e.preventDefault();
+</script>
+
+</body>
+</html>

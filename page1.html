@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="getloc()">locationo</button>
+    <button onclick="goMap()">map</button>
+
+    <svg width="300" height="300">
+        <circle id="radial" cx="150" cy="150" r="60" fill="blue" stroke="red" stroke-width="3">
+        </circle>
+
+
+    </svg>
+
+    <svg width="400px" height="400px">
+        <defs>
+            <radialgradient id="clc" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="red"></stop>
+                <stop offset="30%" stop-color="rgb(234, 232, 161)"></stop>
+                <stop offset="70%" stop-color="rgb(161, 229, 234)"></stop>
+                <stop offset="100%" stop-color="red"></stop>
+            </radialgradient>
+        </defs>
+        <circle cx="100px" cy="150px" r="100px" fill="url(#clc)" stroke="red" stroke-width="2px">
+
+        </circle>
+    </svg>
+    <canvas id="canvas" width="200" height="200" style="border:1px solid #000;"></canvas>
+    <script>
+        function getloc() {
+            navigator.geolocation.getCurrentPosition(getloatian)
+        }
+        let lat, long;
+        function getloatian(pos) {
+            console.log(`lat ${pos.coords.latitude} long ${pos.coords.longitude}`);
+            lat = pos.coords.latitude
+
+            long = pos.coords.longitude
+
+        }
+
+        function goMap() {
+
+            location.assign(`http://maps.google.com/maps?q=${lat}+${long}`)
+        }
+
+
+        document.querySelector('#radial').addEventListener('mouseenter', function () {
+            this.style.fill = "red"
+        })
+        document.querySelector('#radial').addEventListener('mouseout', function () {
+            this.style.fill = "black"
+        })
+
+        document.querySelector("#radial").addEventListener('click', function () {
+            alert('Mouse click Circle')
+        })
+
+
+
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        ctx.arc(100, 50, 50, 0, 2 * Math.PI, true)
+        ctx.stroke()
+        ctx.style = "red";
+        ctx.font = "15px bold"
+        ctx.fillText("Romany", 85, 60)
+
+
+        // const sadImg = new Image();
+        // const smileImg = new Image();
+
+        // sadImg.src = "sad.png";
+        // smileImg.src = "smiley.png";
+
+        // function draw(sad) {
+        //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+        // }
+
+
+        // sadImg.onload = function () {
+        //     draw(sadImg);
+        // };
+
+
+        // canvas.addEventListener("mouseenter", function () {
+        //     draw(smileImg);
+        // });
+
+        // // mouseup => back to sad normal
+        // canvas.addEventListener("mouseup", function () {
+        //     draw(sadImg);
+        // });
+
+        // // لو سحبت الماوس برا يرجع sad
+        // canvas.addEventListener("mouseleave", function () {
+        //     draw(sadImg, 1);
+        // });
+
+    </script>
+</body>
+
+</html>
