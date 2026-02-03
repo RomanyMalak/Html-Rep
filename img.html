@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Canvas Face</title>
+  <style>
+    canvas { border: 1px solid #333; }
+  </style>
+</head>
+<body>
+
+<canvas id="c" width="400" height="400"></canvas>
+
+<script>
+  const canvas = document.getElementById("c");
+  const ctx = canvas.getContext("2d");
+
+  const sad = new Image();
+  const smile = new Image();
+  sad.src = "sad.png";
+  smile.src = "smiley.png";
+
+  let ready = 0;
+  const base = { x: 50, y: 50, w: 200, h: 200 };
+
+  function draw(img, scaleX = 1) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, base.x, base.y, base.w * scaleX, base.h);
+  }
+
+  function onReady() {
+    ready++;
+    if (ready === 2) draw(sad); // on page load
+  }
+
+  sad.onload = onReady;
+  smile.onload = onReady;
+
+  canvas.onmousedown = () => { if (ready === 2) draw(smile, 1.3); }; // wider
+  canvas.onmouseup   = () => { if (ready === 2) draw(sad, 1); };     // back normal
+  canvas.onmouseleave = () => { if (ready === 2) draw(sad, 1); };    // safety
+</script>
+
+</body>
+</html>
